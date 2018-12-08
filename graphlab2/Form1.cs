@@ -45,7 +45,7 @@ namespace graphlab2
             drawLine(x2, y2, x3, y3, g);
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);
             timer2.Enabled = true;
-            // timer3.Enabled = true;
+            
 
 
         }
@@ -67,22 +67,21 @@ namespace graphlab2
 
         private void timer2_Tick(object sender, EventArgs e)
         {
-            int angl = 1;
+          
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);
-            Tuple<int, int> h = povorot(x2, y2, pictureBox1.Width / 2, pictureBox1.Height / 2, angl);
+            Tuple<int, int> h = povorot(x2, y2, pictureBox1.Width / 2, pictureBox1.Height / 2,1);
 
             x2 = h.Item1;
             y2 = h.Item2;
             timer3_Tick(sender, e);
             drawLine(pictureBox1.Width / 2, pictureBox1.Height / 2, x2, y2, g);
-            angl++;
+           
 
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-           // g = Graphics.FromHwnd(pictureBox1.Handle);
-           // drawPolygon(g);
+           
 
         bp = new Bitmap(922, 423);
             Graphics g = Graphics.FromImage(bp);
@@ -103,10 +102,9 @@ namespace graphlab2
 
         private void button1_Click(object sender, EventArgs e)
         {
-            //myPen = new Pen(Color.Black, 1);
+          
             g = Graphics.FromHwnd(pictureBox1.Handle);
-
-
+         
             g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);
             timer1.Enabled = true;
 
@@ -144,10 +142,7 @@ namespace graphlab2
 
         }
 
-        private void timer4_Tick(object sender, EventArgs e)
-        {
-            pictureBox1.Refresh();
-        }
+     
 
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -205,6 +200,7 @@ namespace graphlab2
             int l;
             for (l = 0; l < (1 + numPoints * 2); l++)
             {
+
                 drawLine( Points[l].X, Points[l].Y, Points[l+1].X, Points[l+1].Y, g);
             }
            
@@ -212,7 +208,7 @@ namespace graphlab2
          
 
         }
-        private void FloodFill(Bitmap bmp, Point pt, Color targetColor, Color replacementColor, object sender, EventArgs e)
+        private void FloodFill(Bitmap bmp, Point pt, Color targetColor, Color replacementColor)
         {
             targetColor = bmp.GetPixel(pt.X, pt.Y);
             if (targetColor.ToArgb().Equals(replacementColor.ToArgb()))
@@ -237,8 +233,8 @@ namespace graphlab2
                 while (y1 < bmp.Height && bmp.GetPixel(temp.X, y1) == targetColor)
                 {
                     bmp.SetPixel(temp.X, y1, replacementColor);
-                  
-                  //  pictureBox1.Refresh();
+                    // Для наглядности метода растеризации раскомментировать 
+                    //  pictureBox1.Refresh();
                     if (!spanLeft && temp.X > 0 && bmp.GetPixel(temp.X - 1, y1) == targetColor)
                     {
                         pixels.Push(new Point(temp.X - 1, y1));
@@ -271,7 +267,7 @@ namespace graphlab2
          
          
 
-            FloodFill(bp, location, Color.Black, Color.Red,sender,e);
+            FloodFill(bp, location, Color.Black, Color.Red);
 
         }
 
