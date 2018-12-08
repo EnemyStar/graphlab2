@@ -1,0 +1,9 @@
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\bin\Debug\graphlab2.exe.config
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\bin\Debug\graphlab2.exe
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\bin\Debug\graphlab2.pdb
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\obj\Debug\graphlab2.csprojResolveAssemblyReference.cache
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\obj\Debug\graphlab2.Form1.resources
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\obj\Debug\graphlab2.Properties.Resources.resources
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\obj\Debug\graphlab2.csproj.GenerateResource.Cache
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\obj\Debug\graphlab2.exe
+c:\users\привет\documents\visual studio 2015\Projects\graphlab2\graphlab2\obj\Debug\graphlab2.pdb
