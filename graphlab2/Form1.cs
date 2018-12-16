@@ -24,6 +24,7 @@ namespace graphlab2
 
         private void button2_Click(object sender, EventArgs e)
         {
+            //Останавливаем все таймеры на форме
             timer1.Enabled = false;
             timer2.Enabled = false;
             timer3.Enabled = false;
@@ -31,20 +32,21 @@ namespace graphlab2
 
         private void button3_Click(object sender, EventArgs e)
         {
+            //Очищаем pictureBox1
             pictureBox1.Image = null;
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            g = Graphics.FromHwnd(pictureBox1.Handle);
-            x2 = pictureBox1.Width / 2;
+            g = Graphics.FromHwnd(pictureBox1.Handle);//создаем графику для рисования
+            x2 = pictureBox1.Width / 2;//задаем начальные координаты большой палки
             y2 = (pictureBox1.Height / 2) - 100;
-            drawLine(pictureBox1.Width / 2, pictureBox1.Height / 2, x2, y2, g);
-            x3 = x2;
+            
+            drawLine(pictureBox1.Width / 2, pictureBox1.Height / 2, x2, y2, g);//рисуем начальное положение большой палки
+            x3 = x2;//задаем координаты маленькой палки
             y3 = y2 - 50;
-            drawLine(x2, y2, x3, y3, g);
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);
-            timer2.Enabled = true;
+            drawLine(x2, y2, x3, y3, g);//рисуем маленькую палку
+            timer2.Enabled = true;//запускаем таймер
             
 
 
@@ -52,10 +54,14 @@ namespace graphlab2
 
         private void timer3_Tick(object sender, EventArgs e)
         {
-            Tuple<int, int> j = povorot(x3, y3, x2, y2, 15);
+
+        }
+        private void drawsmall()
+        {
+            Tuple<int, int> j = povorot(x3, y3, x2, y2, 15);//поворачиваем дальнюю от центра точку на 15 градусов
             x3 = j.Item1;
             y3 = j.Item2;
-            drawLine(x2, y2, x3, y3, g);
+            drawLine(x2, y2, x3, y3, g);//рисуем линию от конца большой палки до конца маленькой
 
 
         }
@@ -68,13 +74,13 @@ namespace graphlab2
         private void timer2_Tick(object sender, EventArgs e)
         {
           
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);
-            Tuple<int, int> h = povorot(x2, y2, pictureBox1.Width / 2, pictureBox1.Height / 2,1);
+            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);//закрашиваем pictureBox1 белым чтобы создать видимость анимации
+            Tuple<int, int> h = povorot(x2, y2, pictureBox1.Width / 2, pictureBox1.Height / 2,1);//поворачиваем верхнюю точку большой палки на 1 градус(чем больше градус,тем быстрее будет анимация)
 
             x2 = h.Item1;
             y2 = h.Item2;
-            timer3_Tick(sender, e);
-            drawLine(pictureBox1.Width / 2, pictureBox1.Height / 2, x2, y2, g);
+            drawsmall();//вызываем метод который поворачивает и рисует маленькую палку
+            drawLine(pictureBox1.Width / 2, pictureBox1.Height / 2, x2, y2, g);//рисуем большую палку от центра до точки которую мы поворачивали
            
 
         }
@@ -85,7 +91,7 @@ namespace graphlab2
 
         bp = new Bitmap(922, 423);
             Graphics g = Graphics.FromImage(bp);
-            drawPolygon(g,bp);
+            drawPolygon(g);
             pictureBox1.Image = bp;
 
 
@@ -103,16 +109,18 @@ namespace graphlab2
         private void button1_Click(object sender, EventArgs e)
         {
           
-            g = Graphics.FromHwnd(pictureBox1.Handle);
+            g = Graphics.FromHwnd(pictureBox1.Handle);//создаем графику
          
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);
-            timer1.Enabled = true;
+            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);//закрашиваем белым
+            timer1.Enabled = true;//запускаем таймер
 
 
 
         }
         void drawLine(int x1, int y1, int x2, int y2, Graphics g)
         {
+            //Метод брезенхема здесь просто скопирован с первого попавшегося кода. Я сам не до конца понимаю что здесь делают поэтому
+            //я ему объяснял теорию как понял,а код он не смотрел. Рекомендую найти вариант где есть код и хорошее к нему объяснение или написать самому или разобраться с этим(https://ru.wikibooks.org/wiki/%D0%A0%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%B0%D1%86%D0%B8%D0%B8_%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D0%BE%D0%B2/%D0%90%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC_%D0%91%D1%80%D0%B5%D0%B7%D0%B5%D0%BD%D1%85%D1%8D%D0%BC%D0%B0)
             int deltaX = Math.Abs(x2 - x1);
             int deltaY = Math.Abs(y2 - y1);
             int signX = x1 < x2 ? 1 : -1;
@@ -152,64 +160,67 @@ namespace graphlab2
             y1 = rnd.Next(pictureBox1.Height);
             y2 = rnd.Next(pictureBox1.Height);
 
-            drawLine(x1, y1, x2, y2, g);
+            drawLine(x1, y1, x2, y2, g);//генерируем 4 случайных переменных и рисуем по ним линию с помощью нашего алгоритма брезенхема
 
 
         }
-        void drawPolygon(Graphics g,Bitmap bp)
+        void drawPolygon(Graphics g)
         {
-            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);
+            g.FillRectangle(new SolidBrush(Color.White), 0, 0, pictureBox1.Width, pictureBox1.Height);//закрашиваем белым
             Random rnd = new Random();
            
-            x1 = rnd.Next(pictureBox1.Width);
+            x1 = rnd.Next(pictureBox1.Width);//генерируем случайные x1 и x2 для наших будущих начальных точек
             x2 = rnd.Next(pictureBox1.Width);
-            if (x1 > x2) { int k = x2; x2 = x1; x1 = k; }
+            if (x1 > x2) { int k = x2; x2 = x1; x1 = k; }//делаем так чтобы x1 всегда было слева от x2 
 
-            y1 = rnd.Next(pictureBox1.Height);
+            y1 = rnd.Next(pictureBox1.Height);//к нашим x1 и x2 генерируем y,они должны быть равны для работы этого алгоритма
             y2 = y1;
-            int d = x2 - x1;
-            int numPoints = rnd.Next(1, 7);
-            int dx = Convert.ToInt32(d / (numPoints + 1)) + 1;
+            int d = x2 - x1; //вычисляем длинну нашей прямой которая получилось от этих 2 точек
+            int numPoints = rnd.Next(1, 7); //генерируем случайное число вершин которые будем добавлять(их будет в два раза больше чем сгенерирует)
+            int dx = Convert.ToInt32(d / (numPoints + 1)) + 1;//получем шаг с которым надо будет идти от x1 до x2 
             int ampY;
-            Point[] Points = new Point[2+ numPoints * 2];
-            
-            Points[0].X =x1;
-            Points[0].Y= y1;
-            int i = 1;
+            Point[] Points = new Point[2+ numPoints * 2];//создаем массив точек 2 точки начальные (x1,y1),(x2,y2) и numPoints*2 так как точки будут ставить выше и ниже прямой (x1,y1),(x2,y2)
 
-            for (int xi = (x1 + dx); xi < x2; xi += dx)
+            Points[0].X =x1;//запихиваем нашу левую  начальную точку
+            Points[0].Y= y1;
+            int i = 1;//начинаем с 1 т.к. 0 у нас уже занят
+
+            for (int xi = (x1 + dx); xi < x2; xi += dx)//обходим нашу прямую от x1 до x2 с шагом dx и на каждом шаге ставим точку
             {
-                Points[i].X = xi;
-                ampY = rnd.Next(0, y1 - 1);
-                Points[i].Y = y1 - ampY;
+
+                Points[i].X = xi; //добавляем x к точке которую будем ставить
+                ampY = rnd.Next(0, y1 - 1);//генерируем такую переменную чтобы она не вылезла за границы pictureBox
+                Points[i].Y = y1 - ampY;//у нашего начального y отнимаем переменную ampY,тогда получиться что эта точка будет выше прямой по которой мы идем
 
                 i++;
             }
-            Points[i].X = x2;
+            Points[i].X = x2;//теперь когда мы прошли прямую "по верху " нужно будет пройти по низу но перед этим нужно добавить вторую точку прямой,чтобы в конце когда мы будем рисовать у нас прямые не пересекались и мы могли нормально обойти наши точки по часовой 
             Points[i].Y = y2;
             i++;
-            for (int xi = (x2 - dx); xi > x1; xi -= dx)
+            for (int xi = (x2 - dx); xi > x1; xi -= dx)//делаем точно также как и в верхнем цикле только идем уже от x2 до x1 
             {
                 Points[i].X = xi;
                 ampY = rnd.Next(0, pictureBox1.Height - y1);
-                Points[i].Y = y1 + ampY;
+                Points[i].Y = y1 + ampY;//прибавляем ampY чтобы точка была снизу прямой 
 
                 i++;
             }
          
             int l;
-            for (l = 0; l < (1 + numPoints * 2); l++)
+            for (l = 0; l < (1 + numPoints * 2); l++)//теперь просто обходим наш массив и рисуем прямые между всеми точками массива
             {
 
                 drawLine( Points[l].X, Points[l].Y, Points[l+1].X, Points[l+1].Y, g);
             }
            
-            drawLine(Points[l].X, Points[l].Y, x1, y1, g);
-         
+            drawLine(Points[l].X, Points[l].Y, x1, y1, g);//также чтобы полигон был цельным нам надо закрыть его от последнего элемента массива с (x1,y1)
+
 
         }
         private void FloodFill(Bitmap bmp, Point pt, Color targetColor, Color replacementColor)
         {
+            //читайте здесь
+            //https://simpledevcode.wordpress.com/2015/12/29/flood-fill-algorithm-using-c-net/
             targetColor = bmp.GetPixel(pt.X, pt.Y);
             if (targetColor.ToArgb().Equals(replacementColor.ToArgb()))
             {
